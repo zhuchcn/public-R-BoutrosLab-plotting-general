@@ -189,7 +189,7 @@ create.lollipopplot <- create.scatterplot <- function(
 	xleft.rectangle = NULL, ybottom.rectangle = NULL, xright.rectangle = NULL, ytop.rectangle = NULL,
 	col.rectangle = 'transparent', alpha.rectangle = 1, add.points = FALSE, points.x = NULL, points.y = NULL,
 	points.pch = 19, points.col = 'black', points.col.border = 'black', points.cex = 1, add.line.segments = FALSE,
-	line.start = NULL, line.end = NULL, line.col = 'black', line.lwd = 1, add.text = FALSE, text.labels = NULL,
+	line.start = NULL, line.end = NULL, line.start.x = NULL, line.end.x = NULL, line.col = 'black', line.lwd = 1, add.text = FALSE, text.labels = NULL,
 	text.x = NULL, text.y = NULL, text.col = 'black', text.cex = 1, text.fontface = 'bold', text.guess.labels = FALSE,
 	text.guess.skip.labels = TRUE, text.guess.ignore.radius = FALSE, text.guess.ignore.rectangle = FALSE,
 	text.guess.radius.factor = 1, text.guess.buffer.factor = 1, text.guess.label.position = NULL, height = 6,
@@ -1249,10 +1249,12 @@ create.lollipopplot <- create.scatterplot <- function(
 			if (add.line.segments) {
 
 				for (i in 1:length(line.start)) {
+				    x0 <- if (is.null(line.start.x)) x else line.start.x[[i]][subscripts]
+				    x1 <- if (is.null(line.end.x)) x else line.end.x[[i]][subscripts]
 					with(
 						data = new.env(),
 						expr = panel.segments(
-							x, line.start[[i]][subscripts], x, line.end[[i]][subscripts],
+							x0, line.start[[i]][subscripts], x1, line.end[[i]][subscripts],
 							col = line.col[[i]],
 							lwd = line.lwd[[i]],
 							lineend = 1
